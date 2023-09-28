@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using RedditSharp.API.BusinessLogicLayer;
 using RedditSharp.API.RedditHelper;
@@ -5,7 +6,8 @@ using RedditSharp.API.ViewModel;
 
 namespace RedditSharp.API.Controllers
 {
-    [Route("api/v1/[controller]")]
+    
+    [Route("api/v1/[Controller]")]
     [ApiController]
     public class RedditController : ControllerBase
     {
@@ -19,48 +21,43 @@ namespace RedditSharp.API.Controllers
             _redditSharpClient = redditSharpClient;
         }
 
-
         [HttpPost("/ReadRedditPostsAsStream")]
         public async Task<ActionResult<bool>> ReadRedditPostsAsStream(List<string> subReddits)
         {
-            if(subReddits == null || subReddits.Count ==0 )
-            {
-                return BadRequest("Missing subreddits. Please add at least one sub-reddit.");
-            }
             _ = Task.Run(() => _redditSharpClient.ReadRedditPostsAsStream(subReddits));
             return await Task.FromResult(true);
         }
 
-        [HttpGet("/GetPostsByUpvoteAsync")]
+        [HttpGet("posts/{subRedditName}")]
         public async Task<IActionResult> GetPostsByUpvoteAsync(string subRedditName, int top = 5)
         {
             if(string.IsNullOrEmpty(subRedditName))
             {
-                return BadRequest("subRedditname required.");
+                return BadRequest();
             }
 
             var result = await _redditPostService.GetPostsAsyc(subRedditName, top);
             return Ok(result);
         }
 
-        [HttpGet("/UsersWithMostPosts")]
+        [HttpGet("users/{subRedditName}")]
         public async Task<ActionResult<UserModel>> UsersWithMostPosts(string subRedditName, int top = 5)
         {
             if (string.IsNullOrEmpty(subRedditName))
             {
-                return BadRequest("subRedditname required.");
+                return BadRequest();
             }
 
             var result = await _redditPostService.UsersWithMostPostsAsync(subRedditName, top);
             return Ok(result);
         }
 
-        [HttpGet("/GetTotalPostCount")]
+        [HttpGet("posts/total/{subRedditName}")]
         public async Task<ActionResult<int>> GetTotalPostCountAsync(string subRedditName)
         {
             if (string.IsNullOrEmpty(subRedditName))
             {
-                return BadRequest("subRedditname required.");
+                return BadRequest();
             }
 
             return Ok(await _redditPostService.GetTotalPostCountAsync(subRedditName));
