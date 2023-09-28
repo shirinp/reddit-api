@@ -15,6 +15,8 @@ There are 2 projects within the solution.
 I have created various layers of a the api as a folders within RedditSharp.API to keep it simple and easy to read, ideally many folders will become individual class libraries in a real life project. 
 We can certainly secure our API with jWT Token auth or any other mechanism.
 
+I have utilized Redditsharp library for consuming Reddit posts as a stream, after studying it in details, I found that it already fulfills the needs of throttling (Reqeusts per second/ per user) requirement based of the Response headers. 
+
 # Usage
 API Exposes below 4 endpoints:
 **1. /ReadRedditPostsAsStream**
