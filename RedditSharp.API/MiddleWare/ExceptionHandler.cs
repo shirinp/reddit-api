@@ -38,7 +38,7 @@ namespace RedditSharp.API.MiddleWare
                         }
                 }
                 _logger.LogError(ex, ex?.Message ?? string.Empty);
-                var result = System.Text.Json.JsonSerializer.Serialize(new { message = ex?.Message });
+                var result = System.Text.Json.JsonSerializer.Serialize(new { message = "Error occured while processing your request. Please try again later." });
                 await response.WriteAsync(result);
             }
         }
