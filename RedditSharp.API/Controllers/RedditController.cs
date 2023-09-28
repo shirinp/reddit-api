@@ -36,7 +36,7 @@ namespace RedditSharp.API.Controllers
         {
             if(string.IsNullOrEmpty(subRedditName))
             {
-                return BadRequest();
+                return BadRequest("subRedditname required.");
             }
 
             var result = await _redditPostService.GetPostsAsyc(subRedditName, top);
@@ -48,7 +48,7 @@ namespace RedditSharp.API.Controllers
         {
             if (string.IsNullOrEmpty(subRedditName))
             {
-                return BadRequest();
+                return BadRequest("subRedditname required.");
             }
 
             var result = await _redditPostService.UsersWithMostPostsAsync(subRedditName, top);
@@ -60,7 +60,7 @@ namespace RedditSharp.API.Controllers
         {
             if (string.IsNullOrEmpty(subRedditName))
             {
-                return BadRequest();
+                return BadRequest("subRedditname required.");
             }
 
             return Ok(await _redditPostService.GetTotalPostCountAsync(subRedditName));
