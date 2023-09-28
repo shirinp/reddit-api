@@ -19,6 +19,18 @@ namespace RedditSharp.API.Controllers
             _redditSharpClient = redditSharpClient;
         }
 
+
+        [HttpPost("/ReadRedditPostsAsStream")]
+        public async Task<ActionResult<bool>> ReadRedditPostsAsStream(List<string> subReddits)
+        {
+            if(subReddits == null || subReddits.Count ==0 )
+            {
+                return BadRequest("Missing subreddits. Please add at least one sub-reddit.");
+            }
+            _ = Task.Run(() => _redditSharpClient.ReadRedditPostsAsStream(subReddits));
+            return await Task.FromResult(true);
+        }
+
         [HttpGet("/GetPostsByUpvoteAsync")]
         public async Task<IActionResult> GetPostsByUpvoteAsync(string subRedditName, int top = 5)
         {
@@ -52,13 +64,6 @@ namespace RedditSharp.API.Controllers
             }
 
             return Ok(await _redditPostService.GetTotalPostCountAsync(subRedditName));
-        }
-
-        [HttpPost("/ReadRedditPostsAsStream")]
-        public async Task<ActionResult<bool>> ReadRedditPostsAsStream(List<string> subReddits)
-        {
-            _ = Task.Run(() => _redditSharpClient.ReadRedditPostsAsStream(subReddits));
-            return await Task.FromResult(true);
         }
     }
 }
