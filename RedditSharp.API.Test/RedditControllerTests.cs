@@ -19,13 +19,14 @@ namespace RedditSharp.API.Test
             mockConfiguration = new Mock<Microsoft.Extensions.Configuration.IConfiguration>();
             mockRedditSharpClient = new Mock<IRedditSharpClient>();
             redditService = new Mock<IRedditPostService>();
+            //setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
         }
 
         [Fact]
         public async Task GetPostsAsyncTestStatus200()
         {
             redditService.Setup(_ => _.GetPostsAsyc("funny", 5)).ReturnsAsync(RedditClientMockData.GetPosts(5));
-            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object, mockConfiguration.Object);
+            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
             var result = (OkObjectResult)await setup.GetPostsByUpvoteAsync("funny");
             result.StatusCode.Should().Be(200);
             result.Value.Should().NotBeNull();
@@ -34,7 +35,7 @@ namespace RedditSharp.API.Test
         [Fact]
         public async Task GetPostsAsyncTestStatus400()
         {
-            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object, mockConfiguration.Object);
+            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
             var result = (BadRequestResult)await setup.GetPostsByUpvoteAsync(string.Empty);
             result.StatusCode.Should().Be(400);
         }
@@ -43,7 +44,7 @@ namespace RedditSharp.API.Test
         public async Task GetUsersAsyncTestStatus200()
         {
             redditService.Setup(_ => _.UsersWithMostPostsAsync("funny", 5)).ReturnsAsync(RedditClientMockData.GetUsers(5));
-            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object, mockConfiguration.Object);
+            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
             var result = (OkObjectResult)(await setup.UsersWithMostPosts("funny", 5)).Result;
             result?.StatusCode.Should().Be(200);
             result?.Value.Should().NotBeNull();
@@ -52,7 +53,7 @@ namespace RedditSharp.API.Test
         [Fact]
         public async Task GetUsersAsyncTestStatus400()
         {
-            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object, mockConfiguration.Object);
+            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
             var result = (BadRequestResult)(await setup.UsersWithMostPosts(string.Empty)).Result;
             result?.StatusCode.Should().Be(400);
         }
@@ -61,7 +62,7 @@ namespace RedditSharp.API.Test
         public async Task GetTotalPostAsyncTestStatus200()
         {
             redditService.Setup(_ => _.GetPostsAsyc("funny", 5)).ReturnsAsync(RedditClientMockData.GetPosts(5));
-            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object, mockConfiguration.Object);
+            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
             var result = (OkObjectResult)(await setup.GetTotalPostCountAsync("funny")).Result;
             result?.StatusCode.Should().Be(200);
 
@@ -72,7 +73,7 @@ namespace RedditSharp.API.Test
         [Fact]
         public async Task GetTotalPostAsyncTestStatus400()
         {
-            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object, mockConfiguration.Object);
+            var setup = new RedditController(redditService.Object, mockRedditSharpClient.Object);
             var result = (BadRequestResult)(await setup.GetTotalPostCountAsync(string.Empty)).Result;
             result?.StatusCode.Should().Be(400);
         }
