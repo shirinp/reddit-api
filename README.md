@@ -23,17 +23,17 @@ API Exposes below 4 endpoints:
 This end-point is the starting point of running/testing the application, it starts listening for no. of subreddit's you decided to listen on. I tried with **"funny", "askreddit", "memes", "worldnews"** for my testing. by default it download "New Posts" (100) and keep adding new ones being posted in real time. This is a void Task which will trigger Reddit Posts as stream and keep listening until you kill the API. It will store consumed posts in in-memory data store and do console log to post the performance and also creates a log file where we can see the same details for troubleshooting / verification purposes.
 ![image](https://github.com/shirinp/reddit-api/assets/2934881/aa31eb56-b612-4c54-87b1-d55a1bc70ed8)
 
-**2. **/GetPostsByUpvoteAsync****
+**2. **/api/v1/Reddit/posts/{subRedditName}****
 This end-point returns "Posts With Most Up votes" within a given subreddit, you can vary by top 5, 10, 15 etc.. default is 5
 ![image](https://github.com/shirinp/reddit-api/assets/2934881/2e7be830-fd49-4836-98db-e1ce87f23c1c)
 
 
-**3. /UsersWithMostPosts**
+**3. /api/v1/Reddit/users/{subRedditName}**
 This end-point returns "Users With most posts" within a given subreddit, you can vary by top 5, 10, 15 etc.. default is 5
 ![image](https://github.com/shirinp/reddit-api/assets/2934881/9d289956-cb72-4690-9035-3f2ac2281830)
 
 
-**4. /GetTotalPostCount**
+**4. /api/v1/Reddit/posts/total/{subRedditName}**
 This end-point returns "Total posts downloaded within subreddit so far."
 ![image](https://github.com/shirinp/reddit-api/assets/2934881/71805f40-8378-4bb4-9946-3237fc9b9a9f)
 
