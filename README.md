@@ -19,6 +19,7 @@ I have utilized Redditsharp library for consuming Reddit posts as a stream, afte
 
 # Usage
 API Exposes below 4 endpoints:
+
 **1. /ReadRedditPostsAsStream**
 This end-point is the starting point of running/testing the application, it starts listening for no. of subreddit's you decided to listen on. I tried with **"funny", "askreddit", "memes", "worldnews"** for my testing. by default it download "New Posts" (100) and keep adding new ones being posted in real time. This is a void Task which will trigger Reddit Posts as stream and keep listening until you kill the API. It will store consumed posts in in-memory data store and do console log to post the performance and also creates a log file where we can see the same details for troubleshooting / verification purposes.
 ![image](https://github.com/shirinp/reddit-api/assets/2934881/aa31eb56-b612-4c54-87b1-d55a1bc70ed8)
